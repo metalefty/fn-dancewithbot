@@ -9,9 +9,6 @@ def myfunction(context:, input:)
 
   msg = input_value.to_s.strip.empty? ? default_msg : input_value
 
-  #FDK.log(entry: "Inside Ruby Hello World function")
-  { message: "Hello #{name}!" }
-
   @client = ::Twitter::REST::Client.new(
         consumer_key: ENV["CONSUMER_KEY"],
         consumer_secret: ENV["CONSUMER_SECRET"],
