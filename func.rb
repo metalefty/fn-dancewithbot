@@ -2,8 +2,13 @@ require 'fdk'
 require 'twitter'
 
 def myfunction(context:, input:)
-  input_value = input.respond_to?(:fetch) ? input.fetch('name') : input
-  name = input_value.to_s.strip.empty? ? 'World' : input_value
+  input_value = input.respond_to?(:fetch) ? input.fetch('msg') : input
+  
+  now = Time.now.localtime("+09:00").strftime("%Y-%m-%d %H:%M:%S")
+  default_msg = "ただいまの時刻は #{now} です。"
+
+  msg = input_value.to_s.strip.empty? ? default_msg : input_value
+
   #FDK.log(entry: "Inside Ruby Hello World function")
   { message: "Hello #{name}!" }
 
@@ -14,9 +19,8 @@ def myfunction(context:, input:)
         access_token_secret: ENV["ACCESS_TOKEN_SECRET"]
   )
 
-  now = Time.now.localtime("+09:00").strftime("%Y-%m-%d %H:%M:%S")
 
-  update = @client.update "ただいまの時刻は #{now} です。"
+  update = @client.update msg
 
   update.to_h
 end
